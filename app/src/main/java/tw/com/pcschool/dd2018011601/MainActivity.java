@@ -101,6 +101,28 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
     }
+    public void clickRead2(View v)
+    {
+        File f = new File(getFilesDir(), "myfile2.txt");
+        try {
+            FileReader fr = new FileReader(f);
+            BufferedReader br = new BufferedReader(fr);
+            String str = br.readLine();
+            Log.d("FILE", str);
+            Gson gson = new Gson();
+            ArrayList<Student> mydata = gson.fromJson(str, new TypeToken<ArrayList<Student>>(){}.getType());
+            for (Student s :  mydata)
+            {
+                Log.d("FILE", "data:" + s.id + "," + s.name);
+            }
+            br.close();
+            fr.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     class Student
     {

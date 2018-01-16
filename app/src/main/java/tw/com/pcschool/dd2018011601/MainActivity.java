@@ -6,8 +6,12 @@ import android.util.Log;
 import android.view.View;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -55,6 +59,30 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
     }
+    public void clickRead1(View v)
+    {
+        File f = new File(getFilesDir(), "myfile1.txt");
+        try {
+            FileReader fr = new FileReader(f);
+            BufferedReader br = new BufferedReader(fr);
+            String str = br.readLine();
+            Log.d("FILE", str);
+            Gson gson = new Gson();
+            ArrayList<String> mydata = gson.fromJson(str, new TypeToken<ArrayList<String>>(){}.getType());
+            for (String s :  mydata)
+            {
+                Log.d("FILE", "data:" + s);
+            }
+            br.close();
+            fr.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
     public void click4(View v)
     {
         ArrayList<Student> mydata = new ArrayList();
@@ -73,6 +101,7 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
     }
+
     class Student
     {
         public int id;
